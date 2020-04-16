@@ -34,9 +34,9 @@ private:
 
 	void CorrectAimDirection();
 
-	bool GetSightRayHitLocation(FVector& OutHitLocation) const; 
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const; 
-	bool GetLookVectorHitLocation(FVector CamLookDirection, FVector& HitLocationPoint) const;
+	bool CollectSightRayHitLocation(FVector& OutHitLocation) const; 
+	bool CollectTargetingInf(FVector2D ScreenLocation, FVector& LookDirection) const;				//Understanding the Look direction of the player 
+	bool ObserveCollisionLocation(FVector CamLookDirection, FVector& HitLocationPoint) const;		//Understand the look direction to start line tracing 
 	
 	virtual void SetPawn(APawn* InPawn) override;
 

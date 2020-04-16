@@ -30,7 +30,7 @@ void ATankPlayerController::CorrectAimDirection()
 	if (GetPawn() == nullptr) { return; }
 
 	FVector HitLocation; 
-	bool bGotHitLocation = GetSightRayHitLocation(OUT HitLocation);
+	bool bGotHitLocation = CollectSightRayHitLocation(OUT HitLocation);
 	if (bGotHitLocation)
 	{
 		// tank is aimed at the pointed position 
@@ -41,7 +41,7 @@ void ATankPlayerController::CorrectAimDirection()
 	}
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+bool ATankPlayerController::CollectSightRayHitLocation(FVector& OutHitLocation) const
 {
 
 	int32 ViewportSizeX, ViewportSizeY;
@@ -49,16 +49,16 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairLocationX, ViewportSizeY * CrossHairLocationY); 
 
 	FVector CamLookDirection;
-	if (GetLookDirection(ScreenLocation, OUT CamLookDirection))
+	if (CollectTargetingInf(ScreenLocation, OUT CamLookDirection))
 	{
 		// this checks if we can hit 
-		return GetLookVectorHitLocation(CamLookDirection, OutHitLocation);
+		return ObserveCollisionLocation(CamLookDirection, OutHitLocation);
 	}
 
 	return false; 
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::CollectTargetingInf(FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector CameraWorldLocation;
 
@@ -71,7 +71,7 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 
 }
 
-bool ATankPlayerController::GetLookVectorHitLocation(FVector CamLookDirection, FVector& HitLocationPoint) const
+bool ATankPlayerController::ObserveCollisionLocation(FVector CamLookDirection, FVector& HitLocationPoint) const
 {
 	FVector LineTraceStart = PlayerCameraManager->GetCameraLocation();
 	FVector LineTraceEnd = LineTraceStart + (CamLookDirection * LineTraceRange);

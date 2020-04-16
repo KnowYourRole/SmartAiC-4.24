@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-
 #include "TankAimingComponent.generated.h"
 
 UENUM()
@@ -66,7 +65,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> TankProjectileType;	
 
-	void MoveBarrel(FVector AimDirection);
-	void MoveTurret(FVector AimDirection);
+	void WeaponControl(FVector AimDirection);			//Improved allows weapon control
+	void RotateTankHead(FVector AimDirection);		//Improved allows player to retate tank head
 	bool IsHeadRotating();
 };

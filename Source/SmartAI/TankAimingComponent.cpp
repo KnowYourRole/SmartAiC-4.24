@@ -66,8 +66,8 @@ void UTankAimingComponent::TurnAndAimAt(FVector TargetLocation)
 		FVector AimDirection = TossVelocity.GetSafeNormal();
 
 		// the barrel is moved towards the aiming direction  
-		MoveBarrel(AimDirection);
-		MoveTurret(AimDirection);
+		WeaponControl(AimDirection);
+		RotateTankHead(AimDirection);
 
 		CurrentAimDirection = AimDirection;
 	}
@@ -104,7 +104,7 @@ void UTankAimingComponent::Fire()
 	}
 }
 
-void UTankAimingComponent::MoveBarrel(FVector AimDirection)
+void UTankAimingComponent::WeaponControl(FVector AimDirection)
 {
 	if (!ensure(MyWeaponActor != nullptr)) { return; }
 
@@ -115,7 +115,7 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 	MyWeaponActor->Elevate(RoationDifference.Pitch);
 }
 
-void UTankAimingComponent::MoveTurret(FVector AimDirection) 
+void UTankAimingComponent::RotateTankHead(FVector AimDirection)
 {
 	if (!ensure(MyTankHead != nullptr)) { return; } 
 
@@ -127,11 +127,11 @@ void UTankAimingComponent::MoveTurret(FVector AimDirection)
 	
 	if (FMath::Abs(RoationDifference.Yaw) < 180)
 	{
-		MyTankHead->RotateTurret(RoationDifference.Yaw);
+		MyTankHead->WeaponHeadRotation(RoationDifference.Yaw);
 	}
 	else
 	{
-		MyTankHead->RotateTurret(-RoationDifference.Yaw);
+		MyTankHead->WeaponHeadRotation(-RoationDifference.Yaw);
 	}
 }
 

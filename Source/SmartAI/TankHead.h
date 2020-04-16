@@ -11,7 +11,7 @@ class BATTLETANKS_API UTankHead : public UStaticMeshComponent
 	
 public:
 
-	void RotateTurret(float RotationPosition);
+	void WeaponHeadRotation(float RotationPosition);
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

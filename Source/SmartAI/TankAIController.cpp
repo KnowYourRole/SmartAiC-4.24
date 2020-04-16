@@ -20,7 +20,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (MyTank != nullptr)  //protection of the null pointer
 	{
-		if (EnemyTank != nullptr) //protection of the null pointer
+		if (EnemyTank != nullptr) 
 		{
 			
 			// this enables the AI to move towards the player tank by adhering to the radius allowed 
@@ -39,7 +39,7 @@ void ATankAIController::Tick(float DeltaTime)
 	}	
 }
 
-void ATankAIController::SetPawn(APawn* InPawn)
+void ATankAIController::SetPawn(APawn* InPawn)		//Set the pawn after locating the player
 {
 	Super::SetPawn(InPawn);
 	// setting the possessed tank to a variable that is usable 

@@ -25,8 +25,8 @@ public:
 
 
 private:
-	UTankTrack* MyLeftTrack = nullptr;		
-	UTankTrack* MyRightTrack = nullptr;	
+	UTankTrack* RightSideWheels = nullptr;
+	UTankTrack* LeftSideWheels = nullptr;
 
 	// this function is called from the move to actor function and this is a Polymorphism 
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override; 

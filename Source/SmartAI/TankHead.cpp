@@ -1,6 +1,6 @@
 #include "TankHead.h"
 
-void UTankHead::RotateTurret(float RotationPosition)
+void UTankHead::WeaponHeadRotation(float RotationPosition)
 {
 	auto RotationReq = FMath::Abs(RotationPosition);
 	if (RotationReq < 1.0f) { return; }

@@ -4,8 +4,8 @@
 
 void UTankMovementComponent::InitialiseMoveComponent(UTankTrack* LeftTrack, UTankTrack* RightTrack)
 {
-	MyLeftTrack = LeftTrack;
-	MyRightTrack = RightTrack;
+	LeftSideWheels = LeftTrack;
+	RightSideWheels = RightTrack;
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
@@ -13,7 +13,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	// AI tank movement 	
 	auto TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AIMoveDirection = MoveVelocity.GetSafeNormal();
-
+	
 	// Moving the AI tank 
 	// getting the speed by the angle difference.    
 	auto DotProductResult = FVector::DotProduct(TankForwardDirection, AIMoveDirection); 
@@ -27,15 +27,16 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 void UTankMovementComponent::IntendMoveForward(float Amount)
 {
-	if (!ensure(MyLeftTrack && MyRightTrack)) { return; }
+	if (!ensure(LeftSideWheels && RightSideWheels)) { return; }
 
-	MyLeftTrack->SetThrottle(Amount);
-	MyRightTrack->SetThrottle(Amount);
+	LeftSideWheels->SetThrottle(Amount);
+	RightSideWheels->SetThrottle(Amount);
+
 }
 
 void UTankMovementComponent::IntendTurnRight(float Amount)
 {
-	if (!ensure(MyLeftTrack && MyRightTrack)) { return; }
-	MyLeftTrack->SetThrottle(Amount);
-	MyRightTrack->SetThrottle(-Amount);
+	if (!ensure(LeftSideWheels && RightSideWheels)) { return; }
+	LeftSideWheels->SetThrottle(Amount);
+	RightSideWheels->SetThrottle(-Amount);
 }

@@ -10,29 +10,25 @@ ASprungWheel::ASprungWheel()
 
 	PrimaryActorTick.TickGroup = TG_PostPhysics;
 
-	
 	// Adding the components to the spring 
 	SpringImprovement = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("PhysicsConstraint(Spring)"));
-	SetRootComponent(SpringImprovement);													// set the root component  
-	SpringImprovement->SetAngularSwing1Limit(ACM_Locked, 0);								// set the angular constraint
+	SetRootComponent(SpringImprovement);												// set the root component  
+	SpringImprovement->SetAngularSwing1Limit(ACM_Locked, 0);							// set the angular constraint
 	SpringImprovement->SetAngularSwing2Limit(ACM_Locked, 0);
 	SpringImprovement->SetAngularTwistLimit(ACM_Locked, 0);
 	SpringImprovement->SetLinearZLimit(LCM_Free, 300);									// set the linear restrictions (Z)
 	SpringImprovement->SetLinearPositionDrive(false, false, true);						// Turning the position Z on
 	SpringImprovement->SetLinearVelocityDrive(false, false, true);						// Turning the velocity Z on 
 	SpringImprovement->SetLinearDriveParams(120.0f, 60.0f, 0);							// Position's and Velocity's Strengths
-	
-	// Adding the rod mesh component
-	AxleMesh = CreateDefaultSubobject<USphereComponent>(FName("AxleMesh"));					// the mesh can be invisible if it's set to 
-	AxleMesh->SetupAttachment(SpringImprovement);											// component attached
-
-	// Adding constraints to the axle physics 
+		// Adding constraints to the axle physics 
 	AxlePhysicsConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("PhysicsConstraint(Axle)"));
 	AxlePhysicsConstraint->SetupAttachment(AxleMesh);
 	AxlePhysicsConstraint->SetAngularSwing1Limit(ACM_Locked, 0);								// set the angular constraint
 	AxlePhysicsConstraint->SetAngularSwing2Limit(ACM_Free, 0);									// allows correct rotation of the vehicle forward
 	AxlePhysicsConstraint->SetAngularTwistLimit(ACM_Locked, 0);									// set the twist motion
-	
+	// Adding the rod mesh component
+	AxleMesh = CreateDefaultSubobject<USphereComponent>(FName("AxleMesh"));						// the mesh can be invisible if it's set to 
+	AxleMesh->SetupAttachment(SpringImprovement);												// component attached
 	// Adding the component for the spring 
 	WheelMesh = CreateDefaultSubobject<USphereComponent>(FName("WheelMesh"));					// the mesh can be set to invisible 
 	WheelMesh->SetupAttachment(AxleMesh);														// component attached 
@@ -45,7 +41,7 @@ void ASprungWheel::BeginPlay()
 	// setting the delegate function by calling a Unreal Engine 4 function to the mesh 
 	WheelMesh->SetNotifyRigidBodyCollision(true);												// 'Stimulation generate hit events' are always turned on   			
 	WheelMesh->OnComponentHit.AddDynamic(this, &ASprungWheel::OnHit);							// called when the on hit component function is activated
-
+	
 	RestictSpeed();
 	
 }
